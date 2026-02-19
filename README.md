@@ -12,6 +12,7 @@ Designed for a 100 MHz system clock and verified on FPGA hardware.
 ⚙️ Key Features
 
 9600 Baud Communication (8N1)
+
 16× Oversampling Receiver
 FSM-Based TX & RX Architecture
 Clock Enable–Based Baud Generation (No Derived Clocks)
