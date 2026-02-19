@@ -1,53 +1,28 @@
-# UART Design in Verilog (FPGA Implementation)
+UART Design in Verilog (FPGA Implementation)
+📌 Overview
 
-## 📌 Overview
-This project implements a Universal Asynchronous Receiver Transmitter (UART) protocol using Verilog HDL. 
-The design includes UART Transmitter (TX), UART Receiver (RX), and a Baud Rate Generator.
+This project implements a Universal Asynchronous Receiver Transmitter (UART) in Verilog HDL for FPGA deployment.
+The design includes:
+UART Transmitter (TX)
+UART Receiver (RX)
+Baud Rate Generator
+The UART operates at 9600 baud, 8 data bits, No parity, 1 stop bit (8N1) format.
+Designed for a 100 MHz system clock and verified on FPGA hardware.
 
-The UART operates at 9600 baud rate with 8 data bits, no parity, and 1 stop bit (8N1 format).
+⚙️ Key Features
 
----
+9600 Baud Communication (8N1)
+16× Oversampling Receiver
+FSM-Based TX & RX Architecture
+Clock Enable–Based Baud Generation (No Derived Clocks)
+Fully Synthesizable RTL
+Hardware Validated on FPGA
+Simulation Testbench Included
 
-## ⚙️ Features
-- UART Transmitter (TX)
-- UART Receiver (RX)
-- Baud Rate Generator
-- FSM-based Control Logic
-- Synthesizable RTL Design
-- FPGA Tested
-- Simulation Testbench Included
+🛠 Development Environment
 
----
-
-## 🛠 Tools Used
-- Verilog HDL
-- Xilinx Vivado
-- Target FPGA: (Write your board name here)
-- Clock Frequency: 100 MHz
-- Baud Rate: 9600
-
----
-
-## 📂 Project Structure
-- uart_tx.v
-- uart_rx.v
-- baudrate.v
-- top_module.v
-- constraints.xdc
-- testbench.v
-
----
-
-## 🧠 Learning Outcomes
-- Hierarchical RTL Design
-- FSM Design
-- Serial Communication Protocol
-- FPGA Implementation Flow
-- Timing & Baud Rate Calculation
-
----
-
-## 📸 Future Improvements
-- Configurable Baud Rate
-- Parity Bit Support
-- FIFO Buffer Integration
+HDL: Verilog
+Toolchain: Xilinx Vivado
+Target FPGA: Nexys 4 DDR (Artix-7) 
+System Clock: 100 MHz
+Baud Rate: 9600
