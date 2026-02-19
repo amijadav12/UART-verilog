@@ -1,0 +1,72 @@
+module transmitter(
+    input wire clk,
+    input wire rst,        // Active-LOW reset
+    input wire wr_enb,     // One-clock pulse
+    input wire enb,        // Baud tick (9600 Hz)
+    input wire [7:0] data_in,
+    output reg tx,
+    output reg busy
+);
+
+localparam IDLE  = 2'b00;
+localparam START = 2'b01;
+localparam DATA  = 2'b10;
+localparam STOP  = 2'b11;
+
+reg [1:0] state;
+reg [7:0] data;
+reg [2:0] bit_idx;
+
+always @(posedge clk or negedge rst) begin
+    if (!rst) begin
+        state   <= IDLE;
+        tx      <= 1'b1;   // UART idle is HIGH
+        busy    <= 1'b0;
+        bit_idx <= 3'd0;
+        data    <= 8'd0;
+    end 
+    else begin
+        case (state)
+
+        IDLE: begin
+            tx   <= 1'b1;
+            busy <= 1'b0;
+            if (wr_enb) begin
+                data    <= data_in;
+                bit_idx <= 3'd0;
+                busy    <= 1'b1;
+                state   <= START;
+            end
+        end
+
+        START: begin
+            if (enb) begin
+                tx    <= 1'b0;  // Start bit
+                state <= DATA;
+            end
+        end
+
+        DATA: begin
+            if (enb) begin
+                tx <= data[bit_idx];
+                if (bit_idx == 3'd7)
+                    state <= STOP;
+                else
+                    bit_idx <= bit_idx + 1'b1;
+            end
+        end
+
+        STOP: begin
+            if (enb) begin
+                tx    <= 1'b1;  // Stop bit
+                state <= IDLE;
+            end
+        end
+
+        default: state <= IDLE;
+
+        endcase
+    end
+end
+
+endmodule
